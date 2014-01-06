@@ -31,9 +31,9 @@ for($i=2;$i<30;$i++){
     mysql_query($query);
     echo $tables[$i].'<br>';
 }
-//for($i=0;$i<2;$i++){
-//    $query1="DELETE FROM $tables[$i] WHERE nid>217";
-//    mysql_query($query1);
-//}
+for($i=0;$i<2;$i++){
+    $query1="DELETE FROM $tables[$i] WHERE nid>217";
+    mysql_query($query1);
+}
 
 mysql_close();

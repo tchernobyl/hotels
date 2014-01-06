@@ -1,7 +1,6 @@
 <?php
 
 
-
 class getHotels{
 
     public function connect(){
@@ -59,6 +58,41 @@ class getHotels{
         mysql_connect($host, $user,$passwd) OR die("error connection");
 
         mysql_select_db($bdd) OR die("error data base name");
+
+        function insertImage($url,$id,$delta,$width,$height){
+            $host = "localhost";
+            $user = "root";
+            $bdd = "tunisiaway";
+            $passwd  = "pw2300063";
+            mysql_connect($host, $user,$passwd) OR die("error connection");
+
+            mysql_select_db($bdd) OR die("error data base name");
+
+            define('DIRECTORY', '/home/pw2/Pictures/hotels');
+
+            $content = file_get_contents($url);
+            $path = parse_url($url, PHP_URL_PATH);
+            $filename = basename($path);
+            file_put_contents(DIRECTORY.'/'.$filename, $content);
+
+            $filesize= filesize(DIRECTORY.'/'.$filename);
+
+            $name = strtok($filename, '.');
+            $uri="public://hotels/".$filename;
+
+            $query="INSERT INTO `file_managed`
+    ( `uid`, `filename`, `uri`, `filemime`, `filesize`, `status`, `timestamp`)
+     VALUES (1,$filename,'$uri','image/jpeg',$filesize,1,1389019711)";
+            mysql_query($query);
+            $fid=mysql_insert_id();
+            $query1="INSERT INTO `file_usage`
+    (`fid`, `module`, `type`, `id`, `count`)
+    VALUES ($fid,'file','node',$id,1)";
+            mysql_query($query1);
+            $query2="INSERT INTO `field_data_field_images`
+(`entity_type`, `bundle`, `deleted`, `entity_id`, `revision_id`, `language`, `delta`, `field_images_fid`, `field_images_alt`, `field_images_title`, `field_images_width`, `field_images_height`)
+    VALUES ('node','hotel',0,$id,$id,'und',$delta,$fid,$width,$height)";
+        }
         foreach ($array as $hotel){
 
             $counter++;
@@ -276,9 +310,16 @@ class getHotels{
 
             $numberOfImages=$array2['HotelInformationResponse']['HotelImages']['@size'];
             $images=$array2['HotelInformationResponse']['HotelImages']['HotelImage'];
-            echo '<br>'.$hotelId."-->".$numberOfImages.'<br>';
-            var_dump($images);
 
+for($c=0;$c<$numberOfImages;$c++){
+
+    $ur=$images[$c]['url'];
+
+    $width=$images[$c]['width'];
+
+    $height=$images[$c]['height'];
+    insertImage($ur,$id,$c,$width,$height);
+}
 
         }
 //        foreach ($array as $hotel){
