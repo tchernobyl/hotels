@@ -81,11 +81,11 @@ class getHotels{
     VALUES ($fid,'file','node',$id,1)";
             mysql_query($query1);
             $query2="INSERT INTO `field_data_field_images`
-(`entity_type`, `bundle`, `deleted`, `entity_id`, `revision_id`, `language`, `delta`, `field_images_fid`, `field_images_alt`, `field_images_title`, `field_images_width`, `field_images_height`)
+(`entity_type`, `bundle`, `deleted`, `entity_id`, `revision_id`, `language`, `delta`, `field_images_fid`, `field_images_width`, `field_images_height`)
     VALUES ('node','hotel',0,$id,$id,'und',$delta,$fid,$width,$height)";
             mysql_query($query2);
             $query3="INSERT INTO `field_revision_field_images`
-(`entity_type`, `bundle`, `deleted`, `entity_id`, `revision_id`, `language`, `delta`, `field_images_fid`, `field_images_alt`, `field_images_title`, `field_images_width`, `field_images_height`)
+(`entity_type`, `bundle`, `deleted`, `entity_id`, `revision_id`, `language`, `delta`, `field_images_fid`,  `field_images_width`, `field_images_height`)
     VALUES ('node','hotel',0,$id,$id,'und',$delta,$fid,$width,$height)";
             mysql_query($query3);
         }
