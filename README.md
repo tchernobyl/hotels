@@ -1,0 +1,4 @@
+hotels
+======
+
+hotels API
