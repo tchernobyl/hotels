@@ -35,5 +35,7 @@ for($i=0;$i<2;$i++){
     $query1="DELETE FROM $tables[$i] WHERE nid>217";
     mysql_query($query1);
 }
+$query2="DELETE FROM `file_usage` WHERE fid=0";
+
 
 mysql_close();
